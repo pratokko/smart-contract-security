@@ -78,7 +78,21 @@ Position[] private positions; // tracks all the open positions on a perpetuals p
 
 ```
 
-The above code shows two ways to acctually track the same data except they are being stored in different slots in the evm. Lets take an example of a position A that is on the list but not in the mapping. or rather what if position A is updated but the updated version is on the list but not on the mapping?
+The above code shows two ways to acctually track the same data except they are being stored in different slots in the evm. Lets take an example of a position A that is on the list but not in the mapping. or rather what if position A is updated but the updated version is on the list but not on the mapping? An even more tricky case is when say positions[A] in an array is removed, that means the last index positions.length -1 has to take the space of the position that is removed in our case A, and  pop() the last, basically the last position now becomes the index of A, lets assume our struct has a uint256 index and we fail to update the new index of our last position which is now at the index of A on the array! Makes sense ? below is some illustration
+
+```solidity
+
+[A, B, C, D] // this is our original array
+
+<!-- now lets remove the B which is in the second place -->
+// we remove it and our last element D takes the space making our new array to look like this after we pop the last element in the array
+
+[A, D, C] // if D is at the position of B but with its initial index it causes issues
+
+
+
+```
+**NOTE** use can use an enummerable mapping to replace this   parallel data structures
    
 
 
