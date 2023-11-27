@@ -87,3 +87,4 @@ function attack() external payable {
 
 **NOTE** If money is sent in our Attack contract the fallback function will be triggered since we received some ether. Why fallback -> when a contract receives ether the fallback and the receive function are triggered, in our case in the fallback function we check that the balance of the vulnerable store is greater than the amount  and call the withdraw again
 
+**To use and run the code snippet first deploy the VulnerableStore contract deposit some test ether, then you can get its Address and deploy the attack contract with the address and try calling the attack function by yourself so you can see the process**
