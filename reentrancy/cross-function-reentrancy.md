@@ -60,7 +60,7 @@ import {VulnerableBank} from './VulnerableBank.sol'; // be sure you have the cor
 contract Attack {
 
     VulnerableBank public target;
-    address immutable 1_owner;
+    address immutable i_owner;
 
 
     constructor (address _target) {
@@ -87,3 +87,6 @@ contract Attack {
 
 
 ```
+## How it happened
+
+when the attack contract deposits to the Vulnerable bank it is also eligile to withdraw, this time the withdraw has been protected and cannot be reentered but when the attacker calls the transfer it still works. This is because there is no protection in the function making the attacker to transfer  the amount even after withdrawing since his balance is still not updated. That is what reentrancy is, it happenes when a state is yet to be changes here the state is the balance since it is still not updated to be less the amount it can be transfered to stop this issue is to ensure you follow CEI => what is CEI this refers to the checks Effects and Interraction pattern in simple terms is external calls should be called after the functions have finished executing and also add a reentrancy guard so that it protects funxtions from being reentered.
